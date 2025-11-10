@@ -1,0 +1,136 @@
+# GraphQL 示例查询和变更
+# 可以在 GraphiQL 界面中直接使用这些查询
+
+# ===== 查询示例 =====
+
+# 健康检查
+query Health {
+  health
+}
+
+# 获取所有可用模型
+query GetModels {
+  models {
+    id
+    object
+    created
+    ownedBy
+  }
+}
+
+# ===== Mutation 示例 =====
+
+# 简单聊天
+mutation SimpleChat {
+  chat(input: {
+    messages: [
+      { role: "user", content: "你好，请用一句话介绍你自己" }
+    ]
+  }) {
+    message {
+      role
+      content
+    }
+    model
+    usage {
+      promptTokens
+      completionTokens
+      totalTokens
+    }
+  }
+}
+
+# 带系统提示的聊天
+mutation ChatWithSystem {
+  chat(input: {
+    messages: [
+      { role: "system", content: "你是一个专业的 JavaScript 程序员" }
+      { role: "user", content: "什么是闭包？请简要解释" }
+    ]
+    model: "gpt-3.5-turbo"
+    temperature: 0.7
+  }) {
+    message {
+      role
+      content
+    }
+    model
+  }
+}
+
+# 多轮对话
+mutation MultiTurnChat {
+  chat(input: {
+    messages: [
+      { role: "system", content: "你是一个友好的助手" }
+      { role: "user", content: "什么是 GraphQL？" }
+      { role: "assistant", content: "GraphQL 是一种用于 API 的查询语言，由 Facebook 开发。它允许客户端精确指定需要的数据，避免过度获取或获取不足的问题。" }
+      { role: "user", content: "它相比 REST API 有什么优势？" }
+    ]
+    model: "gpt-3.5-turbo"
+    temperature: 0.7
+    maxTokens: 500
+  }) {
+    message {
+      role
+      content
+    }
+    model
+    usage {
+      promptTokens
+      completionTokens
+      totalTokens
+    }
+  }
+}
+
+# 文本补全
+mutation TextCompletion {
+  completion(input: {
+    prompt: "写一个 JavaScript 函数来实现数组去重："
+    model: "gpt-3.5-turbo-instruct"
+    maxTokens: 200
+    temperature: 0.5
+  }) {
+    text
+    model
+    usage {
+      totalTokens
+    }
+  }
+}
+
+# 创意写作
+mutation CreativeCompletion {
+  completion(input: {
+    prompt: "从前有座山，山里有座庙，"
+    model: "gpt-3.5-turbo-instruct"
+    maxTokens: 150
+    temperature: 0.9
+  }) {
+    text
+    model
+  }
+}
+
+# 使用变量的聊天示例
+mutation ChatWithVariables($messages: [MessageInput!]!, $model: String) {
+  chat(input: {
+    messages: $messages
+    model: $model
+  }) {
+    message {
+      role
+      content
+    }
+    model
+  }
+}
+
+# 使用上述查询时的变量：
+# {
+#   "messages": [
+#     { "role": "user", "content": "Hello!" }
+#   ],
+#   "model": "gpt-3.5-turbo"
+# }

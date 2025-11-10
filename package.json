@@ -1,0 +1,32 @@
+{
+  "name": "ai-agent-works",
+  "version": "1.0.0",
+  "description": "AI Agent GraphQL API on Cloudflare Workers with OpenAI integration",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "vitest"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "graphql",
+    "openai",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "graphql": "^16.8.1",
+    "graphql-yoga": "^5.1.1",
+    "openai": "^4.24.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "typescript": "^5.3.3",
+    "wrangler": "^3.22.1",
+    "vitest": "^1.1.1"
+  }
+}
